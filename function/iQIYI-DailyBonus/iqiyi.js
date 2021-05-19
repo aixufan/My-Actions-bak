@@ -13,7 +13,7 @@ const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
 async function downFile () {
-    const url = 'https://github.com/marsgrace/My-Actions-bak/blob/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
+    const url = 'https://github.com/pytwj/My-Actions/tree/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
     await download(url, './')
 }
 
