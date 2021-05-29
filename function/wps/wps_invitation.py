@@ -63,9 +63,11 @@ start_giftReceive_day = 0
 # 是否显示WPS小程序邀请和会员群集结成功信息, 是填1, 否填0
 success_info = 0
 # 指定WPS小程序被有效邀请人数
-invite_limit = 10
+# 原来是10 暂时改为0 停止邀请
+invite_limit = 0
 # 指定有效参与群集结人数, 减少因多余人数参与集结导致的invite_sid资源不足
-mass_limit = 5
+# 原来是5 暂时改为0 停止邀请
+mass_limit = 0  
 # 这12个账号被邀请,且参与WPS会员群集结,如群集结失败, 请修改以下sid, 修改时注意逗号及保留双引号
 invite_sid = [
     {"name": "公共用户1",
