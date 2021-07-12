@@ -358,7 +358,7 @@ def wps_webpage_clockin(sid: str, headers: dict):
         sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
         return 0
     # 打卡签到
-    clockin_url = 'https://vip.wps.cn/sigin/do'
+    clockin_url = 'https://vip.wps.cn/sign/v2' #'https://vip.wps.cn/sigin/do'
     r = s.post(clockin_url, headers=headers)
     if len(r.history) != 0:
         if r.history[0].status_code == 302:
