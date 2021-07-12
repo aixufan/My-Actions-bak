@@ -295,11 +295,12 @@ def shibie(img, token):
     time.sleep(1)
     if response.status_code == 200:
         result_json = response.json()
-        if result_json['words_result']:
-            sio.write("文字识别结果: {}\n\n".format(result_json['words_result'][0]['words']))
-        else:
-            sio.write("文字识别结果: None\n\n")
+#         if result_json['words_result']:
+#             sio.write("文字识别结果: {}\n\n".format(result_json['words_result'][0]['words']))
+#         else:
+#             sio.write("文字识别结果: None\n\n")
 #         print("文字识别结果:{}\n\n".format(result_json))
+            sio.write("文字识别结果: {}\n\n".format(result_json))
         return result_json
 
 
