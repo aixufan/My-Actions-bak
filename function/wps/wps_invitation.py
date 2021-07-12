@@ -299,8 +299,8 @@ def shibie(img, token):
 #             sio.write("文字识别结果: {}\n\n".format(result_json['words_result'][0]['words']))
 #         else:
 #             sio.write("文字识别结果: None\n\n")
-#         print("文字识别结果:{}\n\n".format(result_json))
-            sio.write("文字识别结果: {}\n\n".format(result_json))
+        print("文字识别结果:{}\n\n".format(result_json))
+        sio.write("文字识别结果: {}\n\n".format(result_json))
         return result_json
 
 
