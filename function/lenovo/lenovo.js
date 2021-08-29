@@ -10,7 +10,6 @@
  const password =process.env.password
  // const SEND_KEY = process.env.SEND_KEY
  const SEND_KEY = 1
- // console.log("account:",account)
 
  const CryptoJS= require('crypto-js');
  const baseinfo =process.env.baseinfo?process.env.baseinfo:"eyJpbWVpIjoiODY1MzE1MDMxOTg1ODc4IiwicGhvbmVicmFuZCI6Imhvbm9yIiwicGhvbmVNb2RlbCI6IkZSRC1BTDEwIiwiYXBwVmVyc2lvbiI6IlY0LjIuNSIsInBob25laW5jcmVtZW50YWwiOiI1NTYoQzAwKSIsIlBhZ2VJbmZvIjoiTXlJbmZvcm1hdGlvbkFjdGlvbkltcGwiLCJwaG9uZWRpc3BsYXkiOiJGUkQtQUwxMCA4LjAuMC41NTYoQzAwKSIsInBob25lTWFudWZhY3R1cmVyIjoiSFVBV0VJIiwibGVub3ZvQ2x1YkNoYW5uZWwiOiJ5aW5neW9uZ2JhbyIsImxvZ2luTmFtZSI6IjE3NjQwNDA4NTM3IiwicGhvbmVwcm9kdWN0IjoiRlJELUFMMTAiLCJzeXN0ZW1WZXJzaW9uIjoiOC4wLjAiLCJhbmRyb2lkc2RrdmVyc2lvbiI6IjI2In0="
@@ -47,7 +46,7 @@
              }
              //预约游戏id
              result += "登陆成功！|| "
-             console.log("login：" + lpsutgt)
+             //console.log("login：" + lpsutgt)
              resolve(lpsutgt);
          } catch (err) {
              console.log(err.response);
@@ -92,7 +91,7 @@
              let res = await $http.post(url["sign2"], data, {
                  headers
              })
-console.log(res.data)
+          console.log(res.data)
 
              if (typeof(res.data) === "object" & res.data.status == 0) {
                  //  msg+=res.data.res.add_yb_tip
@@ -129,7 +128,7 @@ console.log(res.data)
      
      let session = await getsession(lpsutgt)     
      if (session) {
-         console.log(session)
+         //console.log(session)
          await addsign(session)
      }
     // 推送
