@@ -3,7 +3,7 @@ name: 联想智选签到
 on:
     workflow_dispatch:
     schedule:
-        - cron: "15 16 * * *"
+        - cron: "15 18,20 * * *"
 
     watch:
         types: [started]
