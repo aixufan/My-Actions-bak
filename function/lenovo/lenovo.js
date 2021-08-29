@@ -1,8 +1,8 @@
- #const exec = require('child_process').execSync
- #const fs = require('fs')
+ // const exec = require('child_process').execSync
+ // const fs = require('fs')
 
- #const $ = new Env('联想智选签到');
- #const notify = $.isNode() ? require('../sendNotify') : '';
+ // const $ = new Env('联想智选签到');
+ // const notify = $.isNode() ? require('../sendNotify') : '';
  const notify =  require('../sendNotify') 
 
  let result = "【联想延保每日签到】："
