@@ -1,9 +1,16 @@
  const CryptoJS= require('crypto-js');
- const baseinfo =config.lenovo.baseinfo?config.lenovo.baseinfo:"eyJpbWVpIjoiODY1MzE1MDMxOTg1ODc4IiwicGhvbmVicmFuZCI6Imhvbm9yIiwicGhvbmVNb2RlbCI6IkZSRC1BTDEwIiwiYXBwVmVyc2lvbiI6IlY0LjIuNSIsInBob25laW5jcmVtZW50YWwiOiI1NTYoQzAwKSIsIlBhZ2VJbmZvIjoiTXlJbmZvcm1hdGlvbkFjdGlvbkltcGwiLCJwaG9uZWRpc3BsYXkiOiJGUkQtQUwxMCA4LjAuMC41NTYoQzAwKSIsInBob25lTWFudWZhY3R1cmVyIjoiSFVBV0VJIiwibGVub3ZvQ2x1YkNoYW5uZWwiOiJ5aW5neW9uZ2JhbyIsImxvZ2luTmFtZSI6IjE3NjQwNDA4NTM3IiwicGhvbmVwcm9kdWN0IjoiRlJELUFMMTAiLCJzeXN0ZW1WZXJzaW9uIjoiOC4wLjAiLCJhbmRyb2lkc2RrdmVyc2lvbiI6IjI2In0="
+ const baseinfo =process.env.baseinfo?process.env.baseinfo:"eyJpbWVpIjoiODY1MzE1MDMxOTg1ODc4IiwicGhvbmVicmFuZCI6Imhvbm9yIiwicGhvbmVNb2RlbCI6IkZSRC1BTDEwIiwiYXBwVmVyc2lvbiI6IlY0LjIuNSIsInBob25laW5jcmVtZW50YWwiOiI1NTYoQzAwKSIsIlBhZ2VJbmZvIjoiTXlJbmZvcm1hdGlvbkFjdGlvbkltcGwiLCJwaG9uZWRpc3BsYXkiOiJGUkQtQUwxMCA4LjAuMC41NTYoQzAwKSIsInBob25lTWFudWZhY3R1cmVyIjoiSFVBV0VJIiwibGVub3ZvQ2x1YkNoYW5uZWwiOiJ5aW5neW9uZ2JhbyIsImxvZ2luTmFtZSI6IjE3NjQwNDA4NTM3IiwicGhvbmVwcm9kdWN0IjoiRlJELUFMMTAiLCJzeXN0ZW1WZXJzaW9uIjoiOC4wLjAiLCJhbmRyb2lkc2RrdmVyc2lvbiI6IjI2In0="
  const $http=require("axios")
+ 
+ const $ = new Env('中国电信签到');
+ const notify = $.isNode() ? require('../sendNotify') : '';
+
  let result = "【联想延保每日签到】："
- const account = config.lenovo.account
- const password =config.lenovo.password
+ const account = process.env.account
+ const password =process.env.password
+ // const SEND_KEY = process.env.SEND_KEY
+ const SEND_KEY = 1
+
  const parsedWordArray = CryptoJS.enc.Base64.parse(baseinfo);
  const info=JSON.parse(parsedWordArray.toString(CryptoJS.enc.Utf8))
  let deviceid = info.imei
@@ -117,7 +124,21 @@ console.log(res.data)
          console.log(session)
          await addsign(session)
      }
-     return result
+    // 推送
+     if(SEND_KEY) {
+         if (result.includes("签到成功") | result.includes("今天已经签到过啦")) {
+             console.log("联想智选签到-" + result)
+         }else{
+             await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
+             console.log("联想智选签到-" + result)
+         }
+     }else{
+         await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
+         console.log("中国电信签到-" + result)
+     }
+  
+     // return result
  }
 
- module.exports=lxyb
+ lxyb()
+ //module.exports=lxyb
