@@ -21,7 +21,7 @@ jobs:
             - name: npm install
               run: |
                   npm install
-            - name: "运行【中国电信签到】"
+            - name: "运行【联想智选签到】"
               run: |
                   node function/lenovo/lenovo.js
               env:
