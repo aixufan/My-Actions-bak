@@ -10,7 +10,7 @@
  const password =process.env.password
  // const SEND_KEY = process.env.SEND_KEY
  const SEND_KEY = 1
- console.log("account:",account)
+ // console.log("account:",account)
 
  const CryptoJS= require('crypto-js');
  const baseinfo =process.env.baseinfo?process.env.baseinfo:"eyJpbWVpIjoiODY1MzE1MDMxOTg1ODc4IiwicGhvbmVicmFuZCI6Imhvbm9yIiwicGhvbmVNb2RlbCI6IkZSRC1BTDEwIiwiYXBwVmVyc2lvbiI6IlY0LjIuNSIsInBob25laW5jcmVtZW50YWwiOiI1NTYoQzAwKSIsIlBhZ2VJbmZvIjoiTXlJbmZvcm1hdGlvbkFjdGlvbkltcGwiLCJwaG9uZWRpc3BsYXkiOiJGUkQtQUwxMCA4LjAuMC41NTYoQzAwKSIsInBob25lTWFudWZhY3R1cmVyIjoiSFVBV0VJIiwibGVub3ZvQ2x1YkNoYW5uZWwiOiJ5aW5neW9uZ2JhbyIsImxvZ2luTmFtZSI6IjE3NjQwNDA4NTM3IiwicGhvbmVwcm9kdWN0IjoiRlJELUFMMTAiLCJzeXN0ZW1WZXJzaW9uIjoiOC4wLjAiLCJhbmRyb2lkc2RrdmVyc2lvbiI6IjI2In0="
@@ -120,7 +120,11 @@ console.log(res.data)
 
 
  async function lxyb() {
- console.log("任务开始")
+     if (!account) {
+        console.log('请填写联想登录账号后再继续')
+        return
+    }
+     console.log("任务开始")
      lpsutgt = await lxlogin()
      
      let session = await getsession(lpsutgt)     
