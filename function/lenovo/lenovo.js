@@ -120,7 +120,7 @@
 
 
  async function lxyb() {
-     if (!account) {
+     if (!accounts) {
         console.log('请填写联想登录账号后再继续')
         return
     }
@@ -133,7 +133,7 @@
         return
     }
     for (var i=0;i<acc_arr.length;i++){
-        account = acc_arr[i].toString().split("|")
+        var account = acc_arr[i].toString().split("|")
         if (account.length < 2)
         {
             console.log(`第 ${i} 个账号信息不正确，跳过执行`)
