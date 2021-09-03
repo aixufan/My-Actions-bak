@@ -5,9 +5,9 @@
  // const notify = $.isNode() ? require('../sendNotify') : '';
  const notify =  require('../sendNotify') 
 
- let result = "【联想延保每日签到】："
- const account = process.env.account
- const password =process.env.password
+ let result = "【联想延保每日签到】：\n"
+ const accounts = process.env.accounts
+ // const password =process.env.password
  // const SEND_KEY = process.env.SEND_KEY
  const SEND_KEY = 1
 
@@ -92,16 +92,16 @@
              let res = await $http.post(url["sign2"], data, {
                  headers
              })
-          console.log(res.data)
+          // console.log(res.data)
 
              if (typeof(res.data) === "object" & res.data.status == 0) {
                  //  msg+=res.data.res.add_yb_tip
                  if (!res.data.res.success) {
-                     result += "今天已经签到过啦！  "
-                     console.log("今天已经签到过啦")
+                     result += "今天已经签到过啦！  \n"
+                     console.log("\t今天已经签到过啦")
                  } else {
-                     result += "签到成功||" + res.data.res.rewardTips.replace(/\\n/g," || ") + " || 连续签到" + res.data.res.continueCount + "天"
-                     console.log("签到成功    " + res.data.res.rewardTips + "连续签到" + res.data.res.continueCount + "天")
+                     result += "签到成功||" + res.data.res.rewardTips.replace(/\\n/g," || ") + " || 连续签到" + res.data.res.continueCount + "天\n"
+                     console.log("\t签到成功    " + res.data.res.rewardTips.replace(/\\n/g,"    ") + "    连续签到" + res.data.res.continueCount + "天")
 
                  }
 
@@ -111,7 +111,7 @@
          } catch (err) {
          //    console.log(err)
          //    console.log(decodeURI(err.response.data.res.error_CN))
-             result += "签到失败" + decodeURI(err.response.data.res.error_CN)
+             result += "签到失败" + decodeURI(err.response.data.res.error_CN) + "\n"
          }
          resolve();
      });
@@ -125,25 +125,35 @@
         return
     }
      console.log("任务开始")
-     lpsutgt = await lxlogin(account,password)
-     
-     let session = await getsession(lpsutgt)     
-     if (session) {
-         //console.log(session)
-         await addsign(session)
-     }
-    // 推送
-     if(SEND_KEY) {
-         if (result.includes("签到成功") | result.includes("今天已经签到过啦")) {
-             console.log("联想智选签到-" + result)
-         }else{
-             await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
-             console.log("联想智选签到-" + result)
-         }
-     }else{
-         await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
-         console.log("中国电信签到-" + result)
-     }
+     var acc_arr = accounts.toString().replace(/\\r/g,"").split("\n")
+     //多账号循环执行
+    if (acc_arr.length == 0)
+    {
+        console.log('账号信息不正确')
+        return
+    }
+    for (var i=0;i<acc_arr.length;i++){
+        account = acc_arr[i].toString().split("|")
+        if (account.length < 2)
+        {
+            console.log(`第 ${i} 个账号信息不正确，跳过执行`)
+            result += `第 ${i} 个账号信息不正确` + "\n"
+            continue
+        }
+        result += `账号:${account[0]}||进度:${i}/${acc_arr.length} ||`
+        console.log(`账号:${account[0]} -进度:${i}/${acc_arr.length} `)
+        lpsutgt = await lxlogin(account[0],account[1])
+        
+        let session = await getsession(lpsutgt)     
+        if (session) {
+            //console.log(session)
+            await addsign(session)
+        }
+    }
+    // 如果失败了则推送     
+    if (result.includes("失败")) {
+        await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
+    }
   
      // return result
  }

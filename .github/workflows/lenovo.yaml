@@ -25,8 +25,7 @@ jobs:
               run: |
                   node function/lenovo/lenovo.js
               env:
-                  account: ${{ secrets.lenovo_acc }}
-                  password: ${{ secrets.lenovo_pwd }}
+                  accounts: ${{ secrets.lenovo_accounts }}                  
                   baseinfo: ${{ secrets.lenovo_baseinfo }}
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
