@@ -100,8 +100,8 @@
                      result += "今天已经签到过啦！  \n"
                      console.log("\t今天已经签到过啦")
                  } else {
-                     result += "签到成功||" + res.data.res.rewardTips.replace("\n"," || ") + " || 连续签到" + res.data.res.continueCount + "天\n"
-                     console.log("\t签到成功    " + res.data.res.rewardTips.replace("\n","    ") + "    连续签到" + res.data.res.continueCount + "天")
+                     result += "签到成功||" + res.data.res.rewardTips.replace(/\n/g," || ") + " || 连续签到" + res.data.res.continueCount + "天\n"
+                     console.log("\t签到成功    " + res.data.res.rewardTips.replace(/\n/g,"    ") + "    连续签到" + res.data.res.continueCount + "天")
 
                  }
 
@@ -125,7 +125,7 @@
         return
     }
      console.log("任务开始")
-     var acc_arr = accounts.toString().replace("\r","").split("\n")
+     var acc_arr = accounts.toString().replace(/\r/g,"").split("\n")
      //多账号循环执行
     if (acc_arr.length == 0)
     {
