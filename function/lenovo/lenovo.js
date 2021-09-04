@@ -117,6 +117,19 @@
      });
  }
 
+ function hide_str(source_str,start_length=3,end_length=4,char="*"){
+    if (source_str.length<=(start_length+end_length))
+        return source_str
+
+    start_length=start_length<0?0:start_length
+    end_length=end_length<0?0:end_length
+
+    newstr=source_str.substr(0,start_length)
+    for(var i=0;i<source_str.length-start_length-end_length;i++)
+    newstr += char
+    newstr += str.substr(str.length-end_length,end_length)
+    return newstr
+ }
 
 
  async function lxyb() {
@@ -136,12 +149,12 @@
         var account = acc_arr[i].toString().split("|")
         if (account.length < 2)
         {
-            console.log(`第 ${i} 个账号信息不正确，跳过执行`)
-            result += `第 ${i} 个账号信息不正确` + "\n"
+            console.log(`第 ${i+1} 个账号信息不正确，跳过执行`)
+            result += `第 ${i+1} 个账号信息不正确` + "\n"
             continue
         }
-        result += `账号:${account[0]}||进度:${i}/${acc_arr.length} ||`
-        console.log(`账号:${account[0]} -进度:${i}/${acc_arr.length} `)
+        result += `账号:${account[0]}||进度:${i+1}/${acc_arr.length} ||`
+        console.log(`账号:${hide_str(account[0])} -进度:${i+1}/${acc_arr.length} `)
         lpsutgt = await lxlogin(account[0],account[1])
         
         let session = await getsession(lpsutgt)     
