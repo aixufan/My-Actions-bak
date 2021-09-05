@@ -126,8 +126,8 @@
 
     newstr=source_str.substr(0,start_length)
     for(var i=0;i<source_str.length-start_length-end_length;i++)
-    newstr += char
-    newstr += str.substr(str.length-end_length,end_length)
+        newstr += char
+    newstr += source_str.substr(source_str.length-end_length,end_length)
     return newstr
  }
 
