@@ -50,6 +50,7 @@
              //console.log("login：" + lpsutgt)
              resolve(lpsutgt);
          } catch (err) {
+             console.log("登录失败，错误信息：")
              console.log(err.response);
              lpsutgt = null
              result += "登陆失败！ ||  "
@@ -74,7 +75,8 @@
              }
              resolve(json)
          } catch (err) {
-         console.log(err)
+             console.log("获取token失败，错误信息：")
+             console.log(err)
              console.log(decodeURI(err.response.data.res.error_CN))
              result += "获取token失败" + decodeURI(err.response.data.res.error_CN) + "\n"
          }
@@ -156,7 +158,18 @@
         result += `账号:${account[0]}||进度:${i+1}/${acc_arr.length} ||`
         console.log(`账号:${hide_str(account[0])} -进度:${i+1}/${acc_arr.length} `)
         lpsutgt = await lxlogin(account[0],account[1])
-        
+        for (var k=0;k<5;k++)
+        {
+            if (lpsutgt == null || lpsutgt == undefined)
+            {
+                console.log(`登录失败，尝试重新登录（${k+1}/5）`)
+                lpsutgt = await lxlogin(account[0],account[1])
+            }
+            else
+            {
+                break
+            }
+        }
         let session = await getsession(lpsutgt)     
         if (session) {
             //console.log(session)
@@ -164,7 +177,7 @@
         }
     }
     // 如果失败了则推送     
-    if (result.includes("失败")) {
+    if (result.includes("获取token失败") || result.includes("签到失败")) {
         await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
     }
   
