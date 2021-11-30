@@ -177,7 +177,7 @@
         }
     }
     // 如果失败了则推送     
-    if (result.includes("获取token失败") || result.includes("签到失败")) {
+    if (SEND_KEY || result.includes("获取token失败") || result.includes("签到失败")) {
         await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
     }
   
