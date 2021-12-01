@@ -46,14 +46,14 @@
                  lpsutgt = lpsutgt2 ? lpsutgt2[1] : null
              }
              //预约游戏id
-             result += "登陆成功！|| "
+             result += "登陆成功！||"
              //console.log("login：" + lpsutgt)
              resolve(lpsutgt);
          } catch (err) {
              console.log("登录失败，错误信息：")
              console.log(err.response);
              lpsutgt = null
-             result += "登陆失败！ ||  "
+             result += "登陆失败！||"
          }
          resolve();
      });
@@ -155,7 +155,7 @@
             result += `第 ${i+1} 个账号信息不正确` + "\n"
             continue
         }
-        result += `账号:${account[0]}||进度:${i+1}/${acc_arr.length} ||`
+        result += `账号:${account[0]} 进度:${i+1}/${acc_arr.length} ||`
         console.log(`账号:${hide_str(account[0])} -进度:${i+1}/${acc_arr.length} `)
         lpsutgt = await lxlogin(account[0],account[1])
         for (var k=0;k<5;k++)
@@ -176,9 +176,14 @@
             await addsign(session)
         }
     }
+    let sendmsg = result.replace(/\|\| /g,"||").replace(/\|\|/g,"\n\t")
     // 如果失败了则推送     
-    if (SEND_KEY || result.includes("获取token失败") || result.includes("签到失败")) {
-        await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), result);
+    if (result.includes("获取token失败") || result.includes("签到失败")) {      
+        await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), sendmsg);
+    }
+    else if (SEND_KEY && result.includes("今天已经签到过") == false)//非重复签到的签到成功也推送
+    {
+        await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), sendmsg);
     }
   
      // return result
