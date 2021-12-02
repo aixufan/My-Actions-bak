@@ -5,7 +5,8 @@
  // const notify = $.isNode() ? require('../sendNotify') : '';
  const notify =  require('../sendNotify') 
 
- let result = "【联想延保每日签到】：\n"
+ //let result = "【联想延保每日签到】：\n"
+ result = ""
  const accounts = process.env.accounts
  // const password =process.env.password
  // const SEND_KEY = process.env.SEND_KEY
@@ -102,7 +103,7 @@
                      result += "今天已经签到过啦！  \n"
                      console.log("\t今天已经签到过啦")
                  } else {
-                     result += "签到成功||" + res.data.res.rewardTips.replace(/\n/g," || ") + " || 连续签到" + res.data.res.continueCount + "天\n"
+                     result += "签到成功||" + res.data.res.rewardTips.replace(/\n/g," || ") + " || 连续签到" + res.data.res.continueCount + "天\n\n"
                      console.log("\t签到成功    " + res.data.res.rewardTips.replace(/\n/g,"    ") + "    连续签到" + res.data.res.continueCount + "天")
 
                  }
@@ -174,9 +175,9 @@
         if (session) {
             //console.log(session)
             await addsign(session)
-        }
+        } 
     }
-    let sendmsg = result.replace(/\|\| /g,"||").replace(/\|\|/g,"\n\t")
+    let sendmsg = result.replace(/\|\| /g,"||").replace(/\|\|/g,"\n    ")
     // 如果失败了则推送     
     if (result.includes("获取token失败") || result.includes("签到失败")) {      
         await notify.sendNotify("联想智选签到-" + new Date().toLocaleDateString(), sendmsg);
